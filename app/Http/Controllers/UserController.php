@@ -23,7 +23,7 @@ class UserController extends Controller {
        $data =$request->all();
        if($request->avatar){
            //上传头像
-           $result = $uploader ->save($request->avatar, 'avatar', $user->id,362);
+           $result = $uploader ->save($request->avatar, 'avatars', $user->id,362);
            if($result){
                $data['avatar'] = $result['path']; 
            }
