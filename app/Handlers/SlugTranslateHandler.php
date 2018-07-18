@@ -60,18 +60,12 @@ class SlugTranslateHandler
 
          * */
         // 尝试获取获取翻译结果
-        $trans_str;
         if (isset($result['trans_result'][0]['dst'])) {
-            $trans_str= str_slug($result['trans_result'][0]['dst']);
+            return str_slug($result['trans_result'][0]['dst']);
         } else {
             // 如果百度翻译没有结果，使用拼音作为后备计划。
-            $trans_str= $this->pinyin($text);
+            return $this->pinyin($text);
         }
-        //$trans_str等于edit相同时会和edit路由冲突,这里给edit后加上-
-        if( $trans_str === 'edit'){
-            $trans_str.='-';
-        }
-        return $trans_str;
     }
 
     public function pinyin($text)
