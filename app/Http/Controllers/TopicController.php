@@ -34,7 +34,7 @@ class TopicController extends Controller {
         $topic->fill($request->all());
         $topic->user_id = Auth::id(); 
         $topic->save();
-        return redirect()->route('topics.show', $topic->id)->with('info', '创建成功!');
+        return redirect()->route('topics.show', $topic->id)->with('info', '成功创建话题！');
     }
 
     public function edit(Topic $topic) {
@@ -46,14 +46,14 @@ class TopicController extends Controller {
         $this->authorize('update', $topic);
         $topic->update($request->all());
 
-        return redirect()->route('topics.show', $topic->id)->with('info', 'Updated successfully.');
+        return redirect()->route('topics.show', $topic->id)->with('info', '更新成功！');
     }
 
     public function destroy(Topic $topic) {
         $this->authorize('destroy', $topic);
         $topic->delete();
 
-        return redirect()->route('topics.index')->with('info', 'Deleted successfully.');
+        return redirect()->route('topics.index')->with('info', '成功删除！');
     }
     
     public function uploadImage(Request $request, ImageUploadHandler $uploader)
