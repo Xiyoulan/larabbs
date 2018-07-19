@@ -39,4 +39,4 @@ Route::post('upload_image', 'TopicController@uploadImage')->name('topics.upload_
 Route::resource('categories', 'CategoryController', ['only' => ['show']]);
 
 
-Route::resource('replies', 'ReplyController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('replies', 'ReplyController', ['only' => ['store','destroy']]);
