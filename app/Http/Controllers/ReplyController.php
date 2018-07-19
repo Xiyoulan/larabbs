@@ -30,7 +30,7 @@ class ReplyController extends Controller
         $this->authorize('destroy', $reply);
         $reply->delete();
 
-        return redirect()->back()->with('success', '删除成功!');
+        return redirect()->back()->with('success', '成功删除回复!');
     }
 
 }

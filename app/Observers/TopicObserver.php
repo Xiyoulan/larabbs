@@ -26,5 +26,9 @@ class TopicObserver
             dispatch(new TranslateSlug($topic));
         }
     }
+    public function deleted(Topic $topic){
+        //话题被删除,回复应当也被删除,这里用DB类避免触发Eloquent 事件回复删除
+         \DB::table('replies')->where('topic_id', $topic->id)->delete();
+    }
 
 }
