@@ -29,7 +29,9 @@ class ReplyObserver
     public function deleted(Reply $reply){
         //回复被删除时,话题回复数-1
         $topic = $reply->topic;
-        $topic->decrement('reply_count', 1);
+        if ($topic->reply_count > 0) {
+            $topic->decrement('reply_count', 1);
+        }
         //通知回复者回复被删除
         //todo
     }
