@@ -43,6 +43,7 @@ return array(
         ],
         '站点管理' => [
             'settings.site',
+            'links',
         ],
     ],
     /*
