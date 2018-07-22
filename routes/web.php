@@ -44,3 +44,5 @@ Route::resource('replies', 'ReplyController', ['only' => ['store','destroy']]);
 Route::resource('notifications', 'NotificationController', ['only' => ['index']]);
 
 Route::get('permission-denied', 'PagesController@permissionDenied')->name('permission-denied');
+
+Route::get('usersjson','UserController@usersjson');

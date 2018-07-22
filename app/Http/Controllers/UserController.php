@@ -37,5 +37,10 @@ class UserController extends Controller {
        return redirect()->route('users.show',$user->id)->with('success','个人资料更新成功!');
         
     }
+    public function usersjson(Request $request){
+        $name =$request->key;
+        $users=User::where('name','like','%'.$name.'%')->pluck('name')->toArray();
+        return response()->json($users); 
+    }
 
 }

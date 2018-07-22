@@ -7,7 +7,7 @@
             </a>
         </div>
 
-        <div class="infos">
+        <div class="infos media-body">
             <div class="media-heading">
                 <a href="{{ route('users.show', [$reply->user_id]) }}" title="{{ $reply->user->name }}">
                     {{ $reply->user->name }}
@@ -35,4 +35,5 @@
     </div>
     <hr>
     @endforeach
+    {!! $replies->links() !!}
 </div>

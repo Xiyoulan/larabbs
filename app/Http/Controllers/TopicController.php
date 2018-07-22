@@ -7,6 +7,7 @@ use App\Models\Topic;
 use App\Models\User;
 use App\Models\Link;
 use App\Models\Category;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 use App\Handlers\ImageUploadHandler;
 use App\Http\Controllers\Controller;
@@ -30,11 +31,14 @@ class TopicController extends Controller
 
     public function show(Request $request, Topic $topic)
     {
+        //回复数据
+        $replies_per_page =config('larabbs.replies_per_page');
+        $replies = $topic->replies()->with('user','topic')->paginate($replies_per_page);
         // URL 矫正
         if (!empty($topic->slug) && $topic->slug != $request->slug) {
             return redirect($topic->link(), 301);
         }
-        return view('topics.show', compact('topic'));
+        return view('topics.show', compact('topic','replies'));
     }
 
     public function create(Topic $topic)

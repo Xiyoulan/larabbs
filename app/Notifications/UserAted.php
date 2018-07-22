@@ -2,20 +2,20 @@
 
 namespace App\Notifications;
 
+use App\Models\Reply; 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\DatabaseMessage;
 use Illuminate\Notifications\Messages\MailMessage;
-use App\Models\Reply;
 
-class TopicReplied extends Notification implements ShouldQueue
+class UserAted extends Notification
 {
 
     use Queueable;
 
-    public $reply;
-
+    //能被艾特的model,例如回复,帖子
+    private $reply;
+    
     /**
      * Create a new notification instance.
      *
@@ -23,7 +23,7 @@ class TopicReplied extends Notification implements ShouldQueue
      */
     public function __construct(Reply $reply)
     {
-        $this->reply = $reply;
+        $this->reply=$reply;
     }
 
     /**
@@ -34,15 +34,14 @@ class TopicReplied extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        //数据库通知消息
         return ['database'];
     }
 
     public function toDatabase($notifiable)
     {
         $topic = $this->reply->topic;
-        $page = ceil($topic->reply_count / config('larabbs.replies_per_page'));
-        $link = $topic->link(['page'=>$page,'#reply' . $this->reply->id]);
+        $page = ceil($topic ->reply_count/config('larabbs.replies_per_page'));
+        $link = $topic->link(['page'=>$page, '#reply' . $this->reply->id]);
         // 存入数据库里的数据 将被转化成json格式并存储在notifications数据表的data字段中
         return [
             'reply_id' => $this->reply->id,
@@ -56,13 +55,17 @@ class TopicReplied extends Notification implements ShouldQueue
         ];
     }
 
-    public function toMail($notifiable)
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
     {
-        $url = $this->reply->topic->link(['#reply' . $this->reply->id]);
-
-        return (new MailMessage)
-                        ->line('你的话题有新回复！')
-                        ->action('查看回复', $url);
+        return [
+                //
+        ];
     }
 
 }

@@ -67,9 +67,29 @@
         <div class="panel panel-default topic-reply">
             <div class="panel-body">
                 @includeWhen(Auth::check(), 'topics._reply_box', ['topic' => $topic])
-                @include('topics._reply_list', ['replies' => $topic->replies()->with('user','topic')->get()])
+                @include('topics._reply_list')
             </div>
         </div>
     </div>
 </div>
 @stop
+@section('styles')
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery.atwho.css')}}" >
+@endsection
+@section('scripts')
+<script type="text/javascript"  src="{{ asset('js/jquery.caret.js') }}"></script>
+<script type="text/javascript"  src="{{ asset('js/jquery.atwho.js') }}"></script>
+
+<script>
+                            $('#reply-textarea').atwho({
+                                at: "@",
+                                callbacks: {
+                                    remoteFilter: function (query, callback) {
+                                        $.getJSON("/usersjson", {key: query}, function (data) {
+                                            callback(data)
+                                        });
+                                    }
+                                }
+                            })
+</script>
+@endsection
