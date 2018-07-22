@@ -25,10 +25,16 @@ class TopicObserver
             // 推送任务到队列
             dispatch(new TranslateSlug($topic));
         }
+        $topic->user->usersDetail()->increment('topics_count',1);
     }
     public function deleted(Topic $topic){
         //话题被删除,回复应当也被删除,这里用DB类避免触发Eloquent 事件回复删除
          \DB::table('replies')->where('topic_id', $topic->id)->delete();
+           //用户话题数量-1
+        $users_detail =$topic->user->usersDetail;
+        if ($users_detail->topics_count > 0) {
+            $users_detail->decrement('topics_count', 1);
+        }
     }
 
 }

@@ -32,7 +32,8 @@ class ReplyObserver
         //帖子的回复数+1
         $topic = $reply->topic;
         $topic->increment('reply_count', 1);
-
+         //用户回复数+1
+        $reply->user->usersDetail->increment('replies_count', 1);
         // 通知作者话题被回复了
         $topic->user->notify(new TopicReplied($reply));
         // 通知被艾特的人
@@ -51,6 +52,11 @@ class ReplyObserver
         $topic = $reply->topic;
         if ($topic->reply_count > 0) {
             $topic->decrement('reply_count', 1);
+        }
+        //用户回复数-1
+        $users_detail =$reply->user->usersDetail;
+        if ($users_detail->replies_count > 0) {
+            $users_detail->decrement('replies_count', 1);
         }
         //通知回复者回复被删除
         //todo

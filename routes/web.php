@@ -30,6 +30,11 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 //UserController
 Route::resource('users','UserController',['only' => ['show','update','edit']]);
+Route::get('users/{user}/followers','UserController@followers')->name('users.followers');
+Route::get('users/{user}/followings','UserController@followings')->name('users.followings');
+
+Route::post('followers/{user}','FollowerController@follow')->name('followers.follow');
+Route::delete('followers/{user}','FollowerController@unfollow')->name('followers.unfollow');
 
 Route::resource('topics', 'TopicController', ['only' => ['index', 'create', 'store', 'update', 'edit', 'destroy']]);
 Route::get('topics/{topic}/{slug?}', 'TopicController@show')->name('topics.show');

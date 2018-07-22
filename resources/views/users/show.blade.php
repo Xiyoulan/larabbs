@@ -12,11 +12,16 @@
                 <div class="media">
                     <div align="center">
                         <img class="thumbnail img-responsive" src="{{$user->avatar}}" width="300px" height="300px">
+                        @include('users._stats') 
                     </div>
                     <div class="media-body">
                         <hr>
                         <h4><strong>个人简介</strong></h4>
+                        @if($user->introduction)
                         <p>{{ $user->introduction }} </p>
+                        @else
+                        <p>这个人很懒,什么都没留下o(╯□╰)o! </p>
+                        @endif
                         <hr>
                         <h4><strong>注册于</strong></h4>
                         <p>{{ $user->created_at->diffForhumans() }}</p>

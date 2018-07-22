@@ -76,7 +76,7 @@ body {
 .users-show-page {
     .user-info {
         .thumbnail {
-            margin-bottom: 0px;
+            margin-bottom: 22px;
         }
     }
 
@@ -103,7 +103,7 @@ body {
     .pagination {
         margin: 12px 0;
     }
-     .meta {
+    .meta {
         font-size: .9em;
         color: #b3b3b3;
     }
@@ -172,6 +172,16 @@ body {
         color: #b3b3b3;
     }
 }
+/*users-follow-page*/
+.users-followings-page,.users-followers-page{
+    h3 {
+        text-align: center;
+    }
+    h5 {
+        text-align: center;
+        margin-top: 20px;
+    }
+}
 /* Notifications badge */
 
 .notifications-badge {
@@ -204,4 +214,102 @@ body {
             font-size: 0.9em;
         }
     }
+}
+/* statis */
+.stats {
+    overflow: auto;
+    margin-top: 10px;
+    padding: 0;
+    a {
+        float: left;
+        padding: 0 10px;
+        text-align: center;
+        width: 33%;
+        border-left: 1px solid $gray-lighter;
+        color: gray;
+        &:first-child {
+            padding-left: 0;
+            border: 0;
+        }
+        &:hover {
+            text-decoration: none;
+            color: #337ab7;
+        }
+    }
+    strong {
+        display: block;
+        font-size: 1.2em;
+        color: black;
+    }
+}
+/* forms */
+
+#follow_form button {
+    margin: 0 auto;
+    display: block;
+    margin-top: 25px;
+}
+section.user_info {
+    padding-bottom: 10px;
+    margin-top: 20px;
+    text-align: center;
+    .gravatar {
+        float: none;
+        max-width: 70px;
+    }
+    h1 {
+        font-size: 1.4em;
+        letter-spacing: -1px;
+        margin-bottom: 3px;
+        margin-top: 15px;
+    }
+}
+
+.gravatar {
+    float: left;
+    margin-right: 10px;
+    max-width: 50px;
+    border-radius: 50%;
+}
+.stats {
+    overflow: auto;
+    margin-top: 0;
+    padding: 0;
+    a {
+        float: left;
+        padding: 0 10px;
+        text-align: center;
+        width: 33%;
+        border-left: 1px solid $gray-lighter;
+        color: gray;
+        &:first-child {
+            padding-left: 0;
+            border: 0;
+        }
+        &:hover {
+            text-decoration: none;
+            color: #337ab7;
+        }
+    }
+    strong {
+        display: block;
+        font-size: 1.2em;
+        color: black;
+    }
+}
+/*users*/
+.users {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    li {
+        overflow: auto;
+        padding: 10px 0;
+        border-bottom: 1px solid $gray-lighter;
+    }
+}
+.delete-btn {
+    float: right;
+    position: relative;
+    right: 0;
 }

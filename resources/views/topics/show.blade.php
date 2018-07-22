@@ -19,6 +19,7 @@
                         <a href="{{ route('users.show', $topic->user->id) }}">
                             <img class="thumbnail img-responsive" src="{{ $topic->user->avatar }}" width="300px" height="300px">
                         </a>
+                        @include('users._stats',['user' => $topic->user]) 
                     </div>
                 </div>
             </div>

@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder {
         ];
         //生成数据集合 
         $users = factory(User::class)
-                ->times(10)
+                ->times(25)
                 ->make()
                 ->each(function($user, $index) use($avatars,$faker) {
             //从头像数组中随机一个
