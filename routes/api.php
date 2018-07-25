@@ -21,5 +21,17 @@ $api->version('v1', [
         // 图片验证码
         $api->post('captchas', 'CaptchaController@store')
                 ->name('api.captchas.store');
+        // 第三方登录
+        $api->post('socials/{social_type}/authorizations', 'AuthorizationController@socialStore')
+                ->name('api.socials.authorizations.store');
+        // 登录
+        $api->post('authorizations', 'AuthorizationController@store')
+                ->name('api.authorizations.store');
+        // 刷新token
+        $api->put('authorizations/current', 'AuthorizationController@update')
+                ->name('api.authorizations.update');
+        // 删除token
+        $api->delete('authorizations/current', 'AuthorizationController@destroy')
+                ->name('api.authorizations.destroy');
     });
 });

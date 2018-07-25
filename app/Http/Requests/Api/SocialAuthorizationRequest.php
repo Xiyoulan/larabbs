@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Dingo\Api\Http\FormRequest;
 
-class CaptchaRequest extends FormRequest
+class SocialAuthorizationRequest extends FormRequest
 {
 
     /**
@@ -24,9 +24,16 @@ class CaptchaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'phone' => 'required|regex:/^1[34578]\d{9}$/|unique:users',
+        $rules = [
+            'code' => 'required_without:access_token|string',
+            'access_token' => 'required_without:code|string',
         ];
+
+        if ($this->social_type == 'weixin' && !$this->code) {
+            $rules['openid'] = 'required|string';
+        }
+
+        return $rules;
     }
 
 }

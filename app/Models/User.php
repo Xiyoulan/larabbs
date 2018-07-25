@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
 
     use HasRoles;
@@ -33,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','phone', 'email', 'password', 'introduction', 'avatar'
+        'name','phone', 'email', 'password', 'introduction', 'avatar','weixin_openid','weixin_unionid'
     ];
 
     /**
@@ -111,6 +112,16 @@ class User extends Authenticatable
             $user_ids = compact('user_ids');
         }
         $this->followings()->detach($user_ids);
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
     }
 
 }

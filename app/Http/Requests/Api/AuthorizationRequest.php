@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Dingo\Api\Http\FormRequest;
 
-class CaptchaRequest extends FormRequest
+class AuthorizationRequest extends FormRequest
 {
 
     /**
@@ -25,7 +25,8 @@ class CaptchaRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|regex:/^1[34578]\d{9}$/|unique:users',
+            'username' => 'required|string',
+            'password' => 'required|string|min:6',
         ];
     }
 
