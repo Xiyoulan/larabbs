@@ -53,6 +53,12 @@ $api->version('v1', [
         //某个用户的帖子列表
         $api->get('users/{user}/topics', 'TopicController@userIndex')
                 ->name('api.users.topics.index');
+        // 话题回复列表
+        $api->get('topics/{topic}/replies', 'ReplyController@index')
+                ->name('api.topics.replies.index');
+        // 某个用户的回复列表
+        $api->get('users/{user}/replies', 'ReplyController@userIndex')
+                ->name('api.users.replies.index');
 
 
         // 需要 token 验证的接口
@@ -75,6 +81,21 @@ $api->version('v1', [
             //删除
             $api->delete('topics/{topic}', 'TopicController@destroy')
                     ->name('api.topics.destroy');
+            //回复
+            $api->post('topics/{topic}/replies', 'ReplyController@store')
+                    ->name('api.topics.replies.store');
+            //删除回复
+            $api->delete('topics/{topic}/replies/{reply}', 'ReplyController@destroy')
+                    ->name('api.topics.replies.destroy');
+            // 通知列表
+            $api->get('user/notifications', 'NotificationController@index')
+                    ->name('api.user.notifications.index');
+            // 通知统计
+            $api->get('user/notifications/stats', 'NotificationController@stats')
+                    ->name('api.user.notifications.stats');
+            // 标记消息通知为已读
+            $api->patch('user/read/notifications', 'NotificationController@read')
+                    ->name('api.user.notifications.read');
         });
     });
 });
