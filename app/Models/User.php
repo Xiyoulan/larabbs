@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Auth;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -11,6 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements JWTSubject
 {
 
+    use HasApiTokens;
     use HasRoles;
     use Traits\ActiveUserHelper;
     use Traits\LastActivedAtHelper;
@@ -34,7 +36,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name','phone', 'email', 'password', 'introduction', 'avatar','weixin_openid','weixin_unionid'
+        'name', 'phone', 'email', 'password', 'introduction', 'avatar', 'weixin_openid', 'weixin_unionid'
     ];
 
     /**
@@ -59,16 +61,19 @@ class User extends Authenticatable implements JWTSubject
 
     public function followers()
     {
-       return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
     }
 
     public function followings()
     {
-       return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
     }
-    public function usersDetail(){
+
+    public function usersDetail()
+    {
         return $this->hasOne(UsersDetail::class);
     }
+
     public function markAsRead()
     {
         $this->notification_count = 0;
@@ -122,6 +127,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTIdentifier()
     {
         return $this->getKey();
+    }
+
+    public function findForPassport($username)
+    {
+        filter_var($username, FILTER_VALIDATE_EMAIL) ?
+                        $credentials['email'] = $username :
+                        $credentials['phone'] = $username;
+
+        return self::where($credentials)->first();
     }
 
 }
